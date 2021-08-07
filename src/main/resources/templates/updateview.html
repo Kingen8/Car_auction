@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <title>Exotic Auction</title>
+</head>
+<style>
+  .form-group {
+    padding-left: 100px;
+  }
+
+  .knapp {
+    padding-left: 100px;
+    margin-top: 20px;
+  }
+</style>
+
+<body>
+
+  <h1>UPDATE PAGE</h1>
+  <h2>For your products</h2>
+  <div class="panel-body">
+
+    <form th:action="@{/update}" class="form-horizontal" role="form">
+
+      <input type="hidden" name="id" th:value="${product.id}">
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="name" id="name" th:value="${product.name}"
+            placeholder="ProductName">
+        </div>
+      </div> <!-- form-group // -->
+      <div class="form-group">
+        <label for="price" class="col-sm-3 control-label">Price</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" th:value="${product.price}" name="price" id="price"
+            placeholder="Your Price">
+        </div>
+      </div> <!-- form-group // -->
+      <div class="form-group">
+        <label for="description" class="col-sm-3 control-label">Description</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" name="description" id="description"
+            th:text="${product.description}"> </textarea>
+        </div>
+      </div> <!-- form-group // -->
+      <div class="form-group">
+        <label for="Picture" class="col-sm-3 control-label">Picture</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" th:value="${product.picture}" name="Picture" id="Picture"
+            placeholder="URL for picture">
+        </div>
+      </div> <!-- form-group // -->
+      <br>
+      <div class="form-group">
+        <div class="dropdown">
+
+          <label for="categories">Choose a car:</label>
+          <select id="categories" name="categories">
+            <option value="ferrari">Ferrari</option>
+            <option value="lamborghini">Lamborghini</option>
+            <option value="mclaren">McLaren</option>
+            <option value="bugatti">Bugatti</option>
+          </select>
+
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <a th:href="@{/update/${categories}}"> <button type="submit" class="btn btn-primary">update</button></a>
+
+        </div>
+      </div> <!-- form-group // -->
+    </form>
+
+  </div><!-- panel-body // -->
+
+  <div class="knapp">
+    <br>
+    <form th:action="@{|/delete/${product.id}|}">
+      <input type="hidden" name="id" th:value="${product.id}">
+      <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
+
+    <a href="/restricted/0" class="btn btn-info" role="button">HOME</a>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

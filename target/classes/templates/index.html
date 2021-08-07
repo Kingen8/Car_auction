@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} " />
+  <link th:rel="stylesheet" th:href="@{/assets/styles/custom.css} " />
+
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+
+  <title>Auction Site</title>
+</head>
+<style>
+  .card-img-top {
+    height: 150px;
+    width: 400px;
+  }
+
+  .col-sm-6 {
+    padding-top: 20px;
+  }
+
+  .card-body {
+    height: 260px;
+    overflow: auto;
+
+  }
+</style>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Auction Site</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/doaddproduct}">Add Product</a>
+
+          </li>
+          <a class="nav-link active" aria-current="page" th:href="@{/restricted/0}">See all auctions</a>
+          <a class="nav-link active" aria-current="page" th:href="@{/closedauctions}">See all closed auctions</a>
+          <li hidden class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Link
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li hidden class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+          <input class="form-control mr-sm-2" id="search" type="search" name="search" placeholder="Search"
+            aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- End NavBar! -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-md-3" th:each="product : ${products}">
+        <div class="card mb-3 " style="width: 18rem;">
+
+          <img class="card-img-top img-fluid" th:src="${product.picture}" alt="Card image cap" width="100">
+
+          <div class="card-body">
+            <h5 th:text="${product.name}" class="card-title"></h5>
+            <p th:text=" 'Starting price: ' + ${product.price}" class="card-text"></p>
+            <p th:text="${product.description}" class="card-text"></p>
+
+
+            <div th:if="${bid.product.id == product.id}" th:each="bid : ${bids}">
+              <p th:text=" 'Current bid: '+ ${bid.bidAmount} + ' SEK'"></p>
+              <p th:text=" 'Current Winner: ' +${bid.user.name}"></p>
+            </div>
+
+            <a th:href="@{|/product/${product.id}|}" class="btn btn-primary">More Info</a>
+            <a th:href="@{|/addbid/${product.id}|}" class="btn btn-primary">Add bid</a>
+
+
+
+
+            <p th:text=" 'Auction Closes: '+${product.date}"></p>
+
+            <b>ALL BIDS</b>
+
+            <div th:each="allbid : ${allbids}">
+              <p th:if="${product.id == allbid.product.id}"
+                th:text=" 'Made by user: ' + ${allbid.user.name} + ' ' + ${allbid.bidAmount} + ' SEK'">
+              </p>
+
+            </div>
+            <div th:if="${product.user.id == user.id || user.role.equals('ROLE_ADMIN')}" th:each="user : ${user}">
+              <a th:href="@{|/closeauction/${product.id}|}" class="btn btn-primary">Close Auction</a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{|/restricted/${i}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+  </span>
+
+  Total items:[[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+
+</body>
+
+</html>
