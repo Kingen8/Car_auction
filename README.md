@@ -3,6 +3,10 @@
 
 # About
   School project to make an Auction Site in Spring Boot Framework. We desired to work with thymeleaf in this project instead of mustache for the frontend.
+  
+# ⏲️ Distribution:
+25% Frontend
+75% Backend
 
 
 # Tech/Framework used 🛠️
