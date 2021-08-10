@@ -1,27 +1,28 @@
-# QuestionNAnswer-Forum-
+# Car Auction Engine
 
-To run the Q&A engine:
+To run the Auction in VS Code:
 
 1. Download the zipped version or git clone into desired folder.
-2. Install the node modules via npm install all in the terminal.
-3. Run the code with npm run serve.
+2. Download JDK11.0.
+3. Unzip the JDK into desired folder.
+4. Ctrl + P to search --> settings.json
+5. Set java.home: "" to the JDK path.
+6. Reload the IDE and run the program with the extension Project Manager for Java.
+
+Some extenstion will be needed to install.
 
 Enjoy
 
 
 # About
-  Our first time working with **node.js** and **vue.js** as a school project. The project idea was to make a forum with focus on the backend and create working endpoints that makes database calls and populates the forum with data. 
-  Time distribution:\
-    30% - Frontend\
-    70% - Backend
+  School project to make an Auction Site in Spring Boot Framework. We desired to work with thymeleaf in this project instead of mustache for the frontend.
 
 
 # Tech/Framework used
 Languages + packages:
-1. JavaScript
-  - Node.js
-  - Vue.js
-  - Express-session
+1. Java
+  - Thymeleaf
+  - oAuth2 authorization.
 
 2. HTML5/CSS3
   - Bootstrap
